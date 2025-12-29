@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  AmandsSense - Loot Sensing/Highlighting Mod for SPT
+
+  Original Author: Amands2Mello
+  Updated for SPT 4.0.x: LT Studio (2025)
+  License: MIT
+
+  Build: dotnet build -c Release
+  Output: bin/Release/net471/AmandsSense.dll
+
+  Override SPT path: dotnet build -c Release -p:SPTDir="D:\YourPath\SPT\"
+-->
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net471</TargetFramework>
+    <AssemblyName>AmandsSense</AssemblyName>
+    <RootNamespace>AmandsSense</RootNamespace>
+    <Description>Loot sensing and highlighting mod for SPT - highlights nearby items, containers, corpses, and extraction points</Description>
+    <Version>3.0.0</Version>
+    <Authors>Amands2Mello;LT Studio</Authors>
+    <LangVersion>latest</LangVersion>
+    <Nullable>disable</Nullable>
+    <Deterministic>true</Deterministic>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);CS1591</NoWarn>
+  </PropertyGroup>
+
+  <!-- SPT Installation Paths - Override via environment variable or command line -->
+  <PropertyGroup>
+    <SPTDir Condition=" '$(SPTDir)' == '' ">G:\Installed Games\SPT\</SPTDir>
+    <SPTManagedDir>$(SPTDir)EscapeFromTarkov_Data\Managed\</SPTManagedDir>
+    <SPTBepInExCoreDir>$(SPTDir)BepInEx\core\</SPTBepInExCoreDir>
+    <SPTPluginsSPTDir>$(SPTDir)BepInEx\plugins\spt\</SPTPluginsSPTDir>
+    <OutputDir>$(SPTDir)BepInEx\plugins\AmandsSense\</OutputDir>
+  </PropertyGroup>
+
+  <!-- EFT Game Assemblies -->
+  <ItemGroup>
+    <Reference Include="Assembly-CSharp">
+      <HintPath>$(SPTManagedDir)Assembly-CSharp.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Comfort">
+      <HintPath>$(SPTManagedDir)Comfort.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Comfort.Unity">
+      <HintPath>$(SPTManagedDir)Comfort.Unity.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="ItemComponent.Types">
+      <HintPath>$(SPTManagedDir)ItemComponent.Types.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>$(SPTManagedDir)Newtonsoft.Json.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>$(SPTManagedDir)Unity.TextMeshPro.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Unity.Postprocessing.Runtime">
+      <HintPath>$(SPTManagedDir)Unity.Postprocessing.Runtime.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Sirenix.Serialization">
+      <HintPath>$(SPTManagedDir)Sirenix.Serialization.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Sirenix.Utilities">
+      <HintPath>$(SPTManagedDir)Sirenix.Utilities.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Unity Engine Modules -->
+  <ItemGroup>
+    <Reference Include="UnityEngine">
+      <HintPath>$(SPTManagedDir)UnityEngine.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.CoreModule">
+      <HintPath>$(SPTManagedDir)UnityEngine.CoreModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.PhysicsModule">
+      <HintPath>$(SPTManagedDir)UnityEngine.PhysicsModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>$(SPTManagedDir)UnityEngine.AudioModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.ImageConversionModule">
+      <HintPath>$(SPTManagedDir)UnityEngine.ImageConversionModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.InputLegacyModule">
+      <HintPath>$(SPTManagedDir)UnityEngine.InputLegacyModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.IMGUIModule">
+      <HintPath>$(SPTManagedDir)UnityEngine.IMGUIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(SPTManagedDir)UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UI">
+      <HintPath>$(SPTManagedDir)UnityEngine.UI.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UIModule">
+      <HintPath>$(SPTManagedDir)UnityEngine.UIModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>$(SPTManagedDir)UnityEngine.UnityWebRequestModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestAudioModule">
+      <HintPath>$(SPTManagedDir)UnityEngine.UnityWebRequestAudioModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestTextureModule">
+      <HintPath>$(SPTManagedDir)UnityEngine.UnityWebRequestTextureModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- BepInEx Core -->
+  <ItemGroup>
+    <Reference Include="0Harmony">
+      <HintPath>$(SPTBepInExCoreDir)0Harmony.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="BepInEx">
+      <HintPath>$(SPTBepInExCoreDir)BepInEx.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- SPT Modules -->
+  <ItemGroup>
+    <Reference Include="spt-reflection">
+      <HintPath>$(SPTPluginsSPTDir)spt-reflection.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="spt-common">
+      <HintPath>$(SPTPluginsSPTDir)spt-common.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+  </ItemGroup>
+
+  <!-- Copy output to SPT plugins folder on Release build -->
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent" Condition="'$(Configuration)' == 'Release'">
+    <ItemGroup>
+      <OutputDLL Include="$(ProjectDir)$(OutDir)$(TargetName).dll" />
+    </ItemGroup>
+    <MakeDir Directories="$(OutputDir)" Condition="!Exists('$(OutputDir)')" />
+    <Copy SourceFiles="@(OutputDLL)" DestinationFolder="$(OutputDir)" />
+    <Message Importance="High" Text="Deployed AmandsSense.dll to $(OutputDir)" />
+  </Target>
+</Project>
